@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/scenery_one"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/top_bar" />
+
+    <com.example.yaoxuehua.tourismattractionsapp.view.NoScrollViewPager
+        android:id="@+id/Main_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"
+        android:layout_above="@+id/bottom_barID"
+        >
+
+
+    </com.example.yaoxuehua.tourismattractionsapp.view.NoScrollViewPager>
+    <include layout="@layout/bottom_bar"
+        android:id="@+id/bottom_barID"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_bottombar_height"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

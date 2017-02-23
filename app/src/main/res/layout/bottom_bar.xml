@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_bottombar_height"
+    android:background="@android:color/transparent">
+
+
+    <RadioGroup
+        android:id="@+id/designer_main_radio_group"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/home_bottombar_radiogroup_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_22"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/tourism_main_radio_btn"
+            style="@style/main_tab_bottom"
+            android:layout_marginTop="@dimen/size_6"
+            android:checked="true"
+            android:drawableTop="@drawable/tab_case_selector"
+            android:text="@string/tourism_control"
+            android:textSize="@dimen/size_12"/>
+
+        <!--个人中心-->
+        <RadioButton
+            android:id="@+id/personal_radio_btn_"
+            style="@style/main_tab_bottom"
+            android:layout_marginTop="@dimen/size_6"
+            android:checked="false"
+            android:drawableTop="@drawable/tab_designer_selector"
+            android:text="@string/person"
+            android:textSize="@dimen/size_12"/>
+
+
+
+        <RadioButton
+            android:id="@+id/map_radio_btn"
+            style="@style/main_tab_bottom"
+            android:layout_marginTop="@dimen/size_6"
+            android:checked="false"
+            android:drawableTop="@drawable/tab_project_selector"
+            android:text="@string/map_search"
+            android:textSize="@dimen/size_12"/>
+    </RadioGroup>
+
+</RelativeLayout>
