@@ -1,5 +1,7 @@
 package com.example.yaoxuehua.tourismattractionsapp.user;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +9,10 @@ import android.widget.EditText;
 
 import com.example.yaoxuehua.tourismattractionsapp.R;
 import com.example.yaoxuehua.tourismattractionsapp.parent.activity.BaseLoginOrRegisterActivity;
+import com.example.yaoxuehua.tourismattractionsapp.sql.MySQLite;
+import com.example.yaoxuehua.tourismattractionsapp.sql.SqliteManager;
+import com.example.yaoxuehua.tourismattractionsapp.sql.SqliteTableManager;
+import com.example.yaoxuehua.tourismattractionsapp.user.bean.UserBean;
 
 /**
  * Created by yaoxuehua on 16-10-19.
@@ -17,6 +23,7 @@ public class RegisterActivity extends BaseLoginOrRegisterActivity {
 
     private EditText phoneNumber, password;
     private Button register_Button;
+    private SQLiteDatabase db;
 
     @Override
     public void onClick(View v) {
@@ -46,6 +53,8 @@ public class RegisterActivity extends BaseLoginOrRegisterActivity {
             @Override
             public void onClick(View v) {
 
+                insertUserInformation(phoneNumber.getText().toString(),Integer.parseInt(password.getText().toString()));
+
             }
         });
     }
@@ -53,6 +62,8 @@ public class RegisterActivity extends BaseLoginOrRegisterActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
 
+        //打开或者创建数据库
+        db = openOrCreateDatabase("db_user_table", Context.MODE_PRIVATE,null);
     }
 
     /**
@@ -67,5 +78,19 @@ public class RegisterActivity extends BaseLoginOrRegisterActivity {
 
             register_Button.setBackgroundResource(R.drawable.content_bg_cyan);
         }
+    }
+    //向数据库放入数据
+    public void insertUserInformation(String name,int password){
+
+        String tableName = "user";
+        SqliteTableManager sqliteTableManager = new SqliteTableManager(tableName,db);
+        sqliteTableManager.isCreateSqlite();
+        SqliteManager sqliteManager = new SqliteManager(db);
+        UserBean userBean = new UserBean();
+        userBean.setName(name);
+        userBean.setPassword(password);
+        sqliteManager.managerTableData(tableName,userBean);
+        db.close();
+        finish();
     }
 }

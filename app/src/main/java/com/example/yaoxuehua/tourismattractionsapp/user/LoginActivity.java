@@ -1,11 +1,15 @@
 package com.example.yaoxuehua.tourismattractionsapp.user;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yaoxuehua.tourismattractionsapp.R;
 import com.example.yaoxuehua.tourismattractionsapp.homepage.MainActivity;
@@ -21,6 +25,7 @@ public class LoginActivity extends BaseLoginOrRegisterActivity {
     private EditText phoneNumber, password;
     private TextView register_now_textView, Retrieve_password_textView;
     private Button login_Button;
+    private SQLiteDatabase db;
 
 
     @Override
@@ -40,8 +45,25 @@ public class LoginActivity extends BaseLoginOrRegisterActivity {
             //登陆
             case R.id.login_Button:
 
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                String name = phoneNumber.getText().toString();
+                String password = phoneNumber.getText().toString();
+                Cursor cursor = db.rawQuery("SELECT * FROM user WHERE name = ?",new String[]{name});
+                int length = cursor.getColumnCount();
+                if (length == 0){
+                    Toast.makeText(this,"没有这个数据",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                while (cursor.moveToNext()){
+
+                    int userPassword = cursor.getInt(cursor.getColumnIndex("password"));
+                    if (userPassword == Integer.parseInt(password)){
+
+                        intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                        db.close();
+                    }
+                }
+
                 break;
 
         }
@@ -82,6 +104,8 @@ public class LoginActivity extends BaseLoginOrRegisterActivity {
     protected void initData(Bundle savedInstanceState) {
 
 
+        //打开或者创建数据库
+        db = openOrCreateDatabase("db_user_table", Context.MODE_PRIVATE,null);
 
     }
 
